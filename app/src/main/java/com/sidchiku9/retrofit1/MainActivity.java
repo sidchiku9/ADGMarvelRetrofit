@@ -2,8 +2,11 @@ package com.sidchiku9.retrofit1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -25,11 +28,13 @@ public class MainActivity extends AppCompatActivity {
         mTextView = findViewById(R.id.postView);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("https://rentbaaz.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         JsonPlaceHolder jsonPlaceHolder = retrofit.create(JsonPlaceHolder.class);
+
+        //from here
 
         Call<List<Post>> call = jsonPlaceHolder.getPosts();
 
@@ -43,10 +48,19 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Post> posts = response.body();
 
+                final SharedPreferences sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
+                Gson gson = new Gson();
+                String json = gson.toJson(posts);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Set",json );
+                editor.commit();
+
                 for(Post post  : posts){
                     String content = "";
-                    content += "ID : " + post.getID() + "\n"  + "USER ID : " + post.getUserID() + "\n" +
-                            "TITLE : " + post.getTitle() + "\n" + "BODY : "  + post.getText() + "\n" + "\n";
+                    content += "NAME : " + post.getName() + "\n"  + "REAL NAME : " + post.getRealName() + "\n" +
+                            "TEAM : " + post.getTeam() + "\n" + "FIRST APPEARNACE : "  + post.getFirstAppearance() + "\n" +
+                            "CREATED BY : " + post.getCreatedBy() + "\n" + "PUBLISHER : " + post.getPublisher() + "\n" +
+                            "IMAGE URL : " + post.getImageURL() + "\n" + "BIO : " + post.getBio() + "\n" + "\n";
                     mTextView.append(content);
                 }
             }
@@ -56,5 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 mTextView.setText(t.getMessage());
             }
         });
+
     }
 }

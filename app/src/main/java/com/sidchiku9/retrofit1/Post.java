@@ -4,26 +4,46 @@ import com.google.gson.annotations.SerializedName;
 
 public class Post {
 
-    private int userID;
-    private int ID;
-    private String title;
+    private String name;
+    private String realname;
+    private String team;
+    private int firstappearance;
+    private String createdby;
+    private String publisher;
+    private String imageurl;
 
-    @SerializedName("body")
-    private String text;
+    @SerializedName("bio")
+    private String bio;
 
-    public int getUserID() {
-        return userID;
+    public String getName() {
+        return name;
     }
 
-    public int getID() {
-        return ID;
+    public String getRealName() {
+        return realname;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTeam() {
+        return team;
     }
 
-    public String getText() {
-        return text;
+    public int getFirstAppearance() {
+        return firstappearance;
+    }
+
+    public String getCreatedBy() {
+        return createdby;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public String getImageURL() {
+        return imageurl;
+    }
+
+    public String getBio() {
+        return bio;
     }
 }
